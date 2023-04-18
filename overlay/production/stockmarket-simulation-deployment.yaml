@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stockmarket-simulation-deployment
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: stockmarket-simulation
+        imagePullPolicy: Always
+        image:  003718499156.dkr.ecr.us-east-1.amazonaws.com/stockmarket-simulation:prod
+        ports:
+          - containerPort: 3000
+        env:
+        - name: PORT
+          valueFrom:
+            configMapKeyRef:
+              name: stockmarket-simulation-configmap-prod
+              key: PORT

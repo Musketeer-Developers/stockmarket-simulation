@@ -1,0 +1,5 @@
+namespace: ingress-nginx
+configMapGenerator:
+- name: stockmarket-simulation-configmap-dev
+  envs:
+  - .env
