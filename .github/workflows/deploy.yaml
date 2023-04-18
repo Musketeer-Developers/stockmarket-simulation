@@ -2,7 +2,7 @@ name: Generic branch build and deployment
 on:
   push:
     branches:
-      - master
+      - feat/CI/CD
 jobs:
   deploy:
     name: Build image
@@ -84,7 +84,7 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: stockmarket-simulation
         IMAGE_TAG: ${{ github.sha }}
-      if: steps.branch-name.outputs.current_branch == 'master'
+      if: steps.branch-name.outputs.current_branch == 'feat/CI/CD'
       run: |
         cp overlay/production/Dockerfile .
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:prod .
@@ -106,8 +106,8 @@ jobs:
         kubectl create configmap stockmarket-simulation-configmap-stage --from-env-file=overlay/staging/configmap/.env --namespace ingress-nginx
         kubectl delete deploy stockmarket-simulation-deployment-stage --namespace ingress-nginx
         kustomize build overlay/staging/ | kubectl apply -f -
-    - name: Deploy master branch to Amazon EKS
-      if: steps.branch-name.outputs.current_branch == 'master'
+    - name: Deploy feat/CI/CD branch to Amazon EKS
+      if: steps.branch-name.outputs.current_branch == 'feat/CI/CD'
       run: |
         kubectl delete configmap stockmarket-simulation-configmap-prod --namespace ingress-nginx
         kubectl create configmap stockmarket-simulation-configmap-prod --from-env-file=overlay/production/configmap/.env --namespace ingress-nginx
