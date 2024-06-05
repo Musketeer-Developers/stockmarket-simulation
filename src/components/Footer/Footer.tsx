@@ -17,6 +17,9 @@ export class Footer extends React.Component<FooterProps, FooterState> {
     getFooterLinks() {
         return (
             <ul>
+                {/* <FooterLink to="https://github.com/stockmarkat/stockmarket-simulation">
+                    Github
+                </FooterLink> */}
             </ul>
         );
     }
