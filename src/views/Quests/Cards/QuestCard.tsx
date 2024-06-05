@@ -17,7 +17,7 @@ export class QuestCard extends React.Component<QuestCardProps> {
 
         return (
             <Card noFooter={true} noHeader={true}>
-                <h4 className="title" style={{float: 'left'}}>{quest.name}</h4>
+                <h4 className="title" style={{float: 'left'}}>{quest.name.replace('Expand your capital', 'Expand your portfolio')}</h4>
                 <i
                     style={{
                         marginTop: '0.2em',

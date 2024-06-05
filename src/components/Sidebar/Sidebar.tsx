@@ -41,7 +41,7 @@ export class Sidebar extends React.Component<SidebarProps, SidebarState> {
 
                 </a>
                 <a href="/" className="simple-text logo-normal">
-                    Stockmarket
+                    Stickball Stock Exchange
                 </a>
             </div>
         );

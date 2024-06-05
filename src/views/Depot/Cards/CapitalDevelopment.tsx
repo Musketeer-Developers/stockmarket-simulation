@@ -12,7 +12,7 @@ export class CapitalDevelopment extends React.Component<CapitalDevelopmentProps>
 
     render() {
         return (
-            <Card title={'Capital Development'} noFooter={true}>
+            <Card title={'Portfolio Value'} noFooter={true}>
                 <FinancialDevelopmentChart
                     valueHistory={this.props.values}
                     interval={CapitalConfig.points() / 6}

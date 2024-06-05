@@ -14,10 +14,10 @@ export interface AppRoute {
 }
 
 const appRoutes: AppRoute[] = [
-    { path: '/depot', name: 'Depot', icon: 'pe-7s-wallet', component: Depot },
+    { path: '/depot', name: 'Portfolio', icon: 'pe-7s-wallet', component: Depot },
     { path: '/market', name: 'Market', icon: 'pe-7s-graph1', component: Market },
     { path: '/quests', name: 'Quests', icon: 'pe-7s-note2', component: Quests },
-    { path: '/', name: 'Depot', redirect: true, to: '/depot'},
+    { path: '/', name: 'Portfolio', redirect: true, to: '/depot'},
 ];
 
 export default appRoutes;

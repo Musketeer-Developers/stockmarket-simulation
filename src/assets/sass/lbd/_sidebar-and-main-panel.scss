@@ -163,10 +163,9 @@ body > .navbar-collapse {
       text-transform: uppercase;
       padding: $padding-small-vertical $padding-zero;
       display: block;
-      font-size: $font-size-large;
+      font-size: $font-size-small;
       color: $white-color;
-      font-weight: $font-weight-normal;
-      line-height: 30px;
+      font-weight: $font-weight-bold;
     }
   }
 

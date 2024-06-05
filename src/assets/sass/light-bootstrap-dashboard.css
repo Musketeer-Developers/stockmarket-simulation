@@ -335,10 +335,9 @@ body > .navbar-collapse .logo {
     text-transform: uppercase;
     padding: 5px 0px;
     display: block;
-    font-size: 18px;
+    font-size: 12px;
     color: #FFFFFF;
-    font-weight: 400;
-    line-height: 30px; }
+    font-weight: 600; }
 
 .sidebar .logo-tim,
 body > .navbar-collapse .logo-tim {
