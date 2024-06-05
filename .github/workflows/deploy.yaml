@@ -2,31 +2,12 @@ name: Generic branch build and deployment
 on:
   push:
     branches:
-      - feat/CI/CD
+      - brookline-bank
 jobs:
   deploy:
     name: Build image
     runs-on: ubuntu-latest
-    env: 
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      TEAM_ARRAY_OBJECTS: ${{ vars.BACKEND_TEAM }}
     steps:
-    - name: Slack Notification
-      uses: act10ns/slack@v1
-      with: 
-        status: starting
-        channel: '#mu-repo-details'
-        message: |
-          ✅ Deployment Started Successfully
-          ✓ repository name: ${{ github.repository }}
-          ✓ event: ${{ github.event_name }}
-          ✓ by: ${{ github.actor }}
-          ✓ branch: ${{ github.ref_name }}
-          ✓ run_attempt: ${{ github.run_attempt }}
-          ✓ job: ${{ github.job }}
-          ✓ commit: ${{ github.sha }}
-          ✓ commit message: ${{ github.event.head_commit.message }}
-      if: always()
     - name: Get branch name
       id: branch-name
       uses: tj-actions/branch-names@v6
@@ -54,98 +35,29 @@ jobs:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
+
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
       with:
         registry-type: private
-    - name: Build, tag, and push dev image to Amazon ECR
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: stockmarket-simulation
-        IMAGE_TAG: ${{ github.sha }}
-      if: steps.branch-name.outputs.current_branch == 'development'
-      run: |
-        cp overlay/development/Dockerfile .
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:dev .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:dev
-    - name: Build, tag, and push stage image to Amazon ECR
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: stockmarket-simulation
-        IMAGE_TAG: ${{ github.sha }}
-      if: steps.branch-name.outputs.current_branch == 'staging'
-      run: |
-        cp overlay/staging/Dockerfile .
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:stage .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:stage
     - name: Build, tag, and push prod image to Amazon ECR
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: stockmarket-simulation
-        IMAGE_TAG: ${{ github.sha }}
-      if: steps.branch-name.outputs.current_branch == 'feat/CI/CD'
+        IMAGE_TAG: brookline-bank
+      if: steps.branch-name.outputs.current_branch == 'brookline-bank'
       run: |
-        cp overlay/production/Dockerfile .
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:prod .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:prod
+        cp overlay/brookline-bank/Dockerfile .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:brookline-bank .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:brookline-bank
     - name: Update kube config
       run: aws eks update-kubeconfig --name sb-StaggingDev-cluster --region us-east-1
 
-    - name: Deploy development branch to Amazon EKS
-      if: steps.branch-name.outputs.current_branch == 'development'
-      run: |
-        kubectl delete configmap stockmarket-simulation-configmap-dev --namespace ingress-nginx
-        kubectl create configmap stockmarket-simulation-configmap-dev --from-env-file=overlay/development/configmap/.env --namespace ingress-nginx
-        kubectl delete deploy stockmarket-simulation-deployment-dev --namespace ingress-nginx
-        kustomize build overlay/development/ | kubectl apply -f -
-    - name: Deploy staging branch to Amazon EKS
-      if: steps.branch-name.outputs.current_branch == 'staging'
-      run: |
-        kubectl delete configmap stockmarket-simulation-configmap-stage --namespace ingress-nginx
-        kubectl create configmap stockmarket-simulation-configmap-stage --from-env-file=overlay/staging/configmap/.env --namespace ingress-nginx
-        kubectl delete deploy stockmarket-simulation-deployment-stage --namespace ingress-nginx
-        kustomize build overlay/staging/ | kubectl apply -f -
     - name: Deploy feat/CI/CD branch to Amazon EKS
-      if: steps.branch-name.outputs.current_branch == 'feat/CI/CD'
+      if: steps.branch-name.outputs.current_branch == 'brookline-bank'
       run: |
-        kubectl delete configmap stockmarket-simulation-configmap-prod --namespace ingress-nginx
-        kubectl create configmap stockmarket-simulation-configmap-prod --from-env-file=overlay/production/configmap/.env --namespace ingress-nginx
-        kubectl delete deploy stockmarket-simulation-deployment-prod --namespace ingress-nginx
-        kustomize build overlay/production/ | kubectl apply -f -
-    - name: Slack Success Notification
-      uses: act10ns/slack@v1
-      with: 
-        status: ${{ job.status }}
-        message: |
-            ✅ status: ${{ job.status }}
-            ✓ repository name: ${{ github.repository }}
-            ✓ event: ${{ github.event_name }}
-            ✓ by: ${{ github.actor }}
-            ✓ branch: ${{ github.ref_name }}
-            ✓ run_attempt: ${{ github.run_attempt }}
-            ✓ job: ${{ github.job }}
-            ✓ commit: ${{ github.sha }}
-            ✓ commit message: ${{ github.event.head_commit.message }}}}
-      if: success()
-    - name: user mention
-      id: getusers
-      uses: RedFC/user-mention-action@v1.1
-      with:
-        slack-webhook-url: ${{ env.SLACK_WEBHOOK_URL }}
-        who-to-mention-array: ${{ env.TEAM_ARRAY_OBJECTS }}
-    - name: Slack Failure Notification
-      uses: act10ns/slack@v1
-      with: 
-        status: ${{ job.status }}
-        message: |
-            ❌ status: ${{ job.status }}
-            ✓ repository name: ${{ github.repository }}
-            ✓ event: ${{ github.event_name }}
-            ✓ by: ${{ github.actor }}
-            ✓ branch: ${{ github.ref_name }}
-            ✓ run_attempt: ${{ github.run_attempt }}
-            ✓ job: ${{ github.job }}
-            ✓ commit: ${{ github.sha }}
-            ✓ commit message: ${{ github.event.head_commit.message }}
-      if: failure() 
+        kubectl delete configmap stockmarket-simulation-configmap-brookline-bank --namespace ingress-nginx
+        kubectl create configmap stockmarket-simulation-configmap-brookline-bank --from-env-file=overlay/brookline-bank/configmap/.env --namespace ingress-nginx
+        # kubectl delete deploy stockmarket-simulation-deployment-brookline-bank --namespace ingress-nginx
+        kustomize build overlay/brookline-bank/ | kubectl apply -f -

@@ -19,7 +19,7 @@ FROM node:16-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-COPY overlay/production/configmap/.env .
+COPY overlay/brookline-bank/configmap/.env .
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
@@ -40,26 +40,8 @@ ENV NODE_ENV production
 # ENV NEXT_TELEMETRY_DISABLED 1
 
 COPY --from=builder /app ./
-COPY --from=builder /app/overlay/production/configmap/.env .
+COPY --from=builder /app/overlay/brookline-bank/configmap/.env .
 #COPY --from=builder /app/public ./public
-
-ENV NEXT_PUBLIC_API_LINK https://api-development.stickball.biz
-ENV NEXT_PUBLIC_TRUE_FALSE https://ai.stickball.biz:8012
-ENV NEXT_PUBLIC_MCQS https://ai.stickball.biz:8006
-ENV NEXT_PUBLIC_YOUTUBE https://ai.stickball.biz:8002
-ENV NEXT_PUBLIC_TIKTOK https://ai.stickball.biz:8004
-ENV NEXT_PUBLIC_KEYWORDS https://ai.stickball.biz:8014
-ENV NEXT_PUBLIC_TEXT_CONTENT https://ai-two.stickball.biz:8008
-ENV NEXT_PUBLIC_AI_COTENT https://ai.stickball.biz:8010
-ENV NEXT_PUBLIC_AI_VIDEO https://ai.stickball.biz:8018
-ENV NEXT_PUBLIC_X_API_KEY ee323a-1232asdfdasf2323@32asdfds-asdfd|--|ee323a-1232asdfdasf2323@32asdfds-asdfd
-ENV NEXT_PUBLIC_S3_BUCKET_LINK https://stickball.s3.amazonaws.com/
-ENV NEXT_PUBLIC_TESTING_APP https://stickball-testing-view.netlify.app?skillID=
-ENV NEXT_PUBLIC_SECRET_ACCESS_KEY y+Cw0OAAowl6oAC465cERIpzkwHxRNcOY29ENnm8
-ENV NEXT_PUBLIC_ACCESS_KEY_ID AKIAQBXNDZNKO24XB2PJ
-ENV NEXT_PUBLIC_REGION us-east-1
-ENV NEXT_PUBLIC_BUCKET_NAME stickball
-ENV NEXT_PUBLIC_APP_CLIENT https://stickball-main-client.netlify.app/
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
