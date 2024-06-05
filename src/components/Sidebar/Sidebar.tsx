@@ -63,6 +63,9 @@ export class Sidebar extends React.Component<SidebarProps, SidebarState> {
                                 Stock Balance: <PriceTag value={this.props.currentStockBalance}/>
                             </p>
                         </li>
+                        <li className="currentBalance-p">
+                          <div id="google_translate_element" />
+                        </li>
                     </ul>
                 </div>
             </div>

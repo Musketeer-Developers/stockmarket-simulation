@@ -279,3 +279,12 @@ body > .navbar-collapse {
   padding: 5px 15px;
   font-weight: 600;
 }
+
+body {
+  position: static;
+  top: 0px !important;
+}
+
+iframe.skiptranslate {
+  display: none !important;
+}
