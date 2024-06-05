@@ -11,11 +11,11 @@ images:
 - name: 003718499156.dkr.ecr.us-east-1.amazonaws.com/stockmarket-simulation
   newTag: brookline-bank
 patchesStrategicMerge:
-- stockmarket-simulation-deployment.yaml
+- stockmarket-simulation-deployment-brookline-bank.yaml
 patches:
 - target:
     group: apps
     version: v1
     kind: Deployment
-    name: stockmarket-simulation-deployment
+    name: stockmarket-simulation-deployment-brookline-bank
   path: container.yaml

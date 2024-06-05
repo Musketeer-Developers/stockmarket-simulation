@@ -57,7 +57,7 @@ jobs:
     - name: Deploy feat/CI/CD branch to Amazon EKS
       if: steps.branch-name.outputs.current_branch == 'brookline-bank'
       run: |
-        # kubectl delete configmap stockmarket-simulation-configmap-brookline-bank --namespace ingress-nginx
+        kubectl delete configmap stockmarket-simulation-configmap-brookline-bank --namespace ingress-nginx
         kubectl create configmap stockmarket-simulation-configmap-brookline-bank --from-env-file=overlay/brookline-bank/configmap/.env --namespace ingress-nginx
         # kubectl delete deploy stockmarket-simulation-deployment-brookline-bank --namespace ingress-nginx
         kustomize build overlay/brookline-bank/ | kubectl apply -f -
