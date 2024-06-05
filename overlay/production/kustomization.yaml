@@ -1,0 +1,21 @@
+nameSuffix: -prod
+commonLabels:
+  app: stockmarket-simulation-prod
+metadata:
+  name: stockmarket-simulation-deployment-prod
+  namespace: ingress-nginx
+bases:
+- ../../base
+namespace: ingress-nginx
+images:
+- name: 003718499156.dkr.ecr.us-east-1.amazonaws.com/stockmarket-simulation
+  newTag: prod
+patchesStrategicMerge:
+- stockmarket-simulation-deployment.yaml
+patches:
+- target:
+    group: apps
+    version: v1
+    kind: Deployment
+    name: stockmarket-simulation-deployment
+  path: container.yaml
