@@ -1,15 +1,15 @@
 nameSuffix: -brookline-bank
 commonLabels:
-  app: stockmarket-simulation-brookline-bank
+  app: stockmarket-simulation-city-of-everett
 metadata:
-  name: stockmarket-simulation-deployment-brookline-bank
+  name: stockmarket-simulation-deployment-city-of-everett
   namespace: ingress-nginx
 bases:
 - ../../base
 namespace: ingress-nginx
 images:
 - name: 003718499156.dkr.ecr.us-east-1.amazonaws.com/stockmarket-simulation
-  newTag: brookline-bank
+  newTag: city-of-everett
 patchesStrategicMerge:
 - stockmarket-simulation-deployment.yaml
 patches:
@@ -17,5 +17,5 @@ patches:
     group: apps
     version: v1
     kind: Deployment
-    name: stockmarket-simulation-deployment-brookline-bank
+    name: stockmarket-simulation-deployment-city-of-everett
   path: container.yaml
