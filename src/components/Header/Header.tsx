@@ -53,7 +53,9 @@ export class Header extends React.Component<HeaderProps, HeaderState> {
     handleScreenshot() {
         const element = document.getElementById('root');
         const printButton = document.getElementById('print-button');
-        printButton.style.display = 'none';
+        if (printButton) {
+            printButton.style.display = 'none';
+        }
         if (element) {
             html2canvas(element).then((canvas: HTMLCanvasElement) => {
                 const imgData = canvas.toDataURL('image/png');
@@ -61,7 +63,10 @@ export class Header extends React.Component<HeaderProps, HeaderState> {
                 link.href = imgData;
                 link.download = 'screenshot.png';
                 link.click();
-                printButton.style.display = 'flex';
+                if (printButton) {
+                    printButton.style.display = 'flex';
+                }
+
             }).catch((error: any) => {
                 console.error('Error capturing screenshot:', error);
             });
