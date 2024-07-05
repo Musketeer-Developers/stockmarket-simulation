@@ -57,7 +57,7 @@ jobs:
     - name: Deploy feat/CI/CD branch to Amazon EKS
       if: steps.branch-name.outputs.current_branch == 'demo-bank'
       run: |
-        # kubectl delete configmap stockmarket-simulation-configmap-demo-bank --namespace ingress-nginx
+        kubectl delete configmap stockmarket-simulation-configmap-demo-bank --namespace ingress-nginx
         kubectl create configmap stockmarket-simulation-configmap-demo-bank --from-env-file=overlay/demo-bank/configmap/.env --namespace ingress-nginx
-        # kubectl delete deploy stockmarket-simulation-deployment-demo-bank --namespace ingress-nginx
+        kubectl delete deploy stockmarket-simulation-deployment-demo-bank --namespace ingress-nginx
         kustomize build overlay/demo-bank/ | kubectl apply -f -
