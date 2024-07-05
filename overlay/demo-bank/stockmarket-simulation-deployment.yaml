@@ -9,12 +9,12 @@ spec:
       containers:
       - name: stockmarket-simulation
         imagePullPolicy: Always
-        image:  003718499156.dkr.ecr.us-east-1.amazonaws.com/stockmarket-simulation:city-of-everett
+        image:  003718499156.dkr.ecr.us-east-1.amazonaws.com/stockmarket-simulation:demo-bank
         ports:
           - containerPort: 3000
         env:
         - name: PORT
           valueFrom:
             configMapKeyRef:
-              name: stockmarket-simulation-configmap-city-of-everett
+              name: stockmarket-simulation-configmap-demo-bank
               key: PORT

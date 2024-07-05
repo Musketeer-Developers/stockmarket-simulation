@@ -1,15 +1,15 @@
-nameSuffix: -city-of-everett
+nameSuffix: -demo-bank
 commonLabels:
-  app: stockmarket-simulation-city-of-everett
+  app: stockmarket-simulation-demo-bank
 metadata:
-  name: stockmarket-simulation-deployment-city-of-everett
+  name: stockmarket-simulation-deployment-demo-bank
   namespace: ingress-nginx
 bases:
 - ../../base
 namespace: ingress-nginx
 images:
 - name: 003718499156.dkr.ecr.us-east-1.amazonaws.com/stockmarket-simulation
-  newTag: city-of-everett
+  newTag: demo-bank
 patchesStrategicMerge:
 - stockmarket-simulation-deployment.yaml
 patches:
@@ -17,5 +17,5 @@ patches:
     group: apps
     version: v1
     kind: Deployment
-    name: stockmarket-simulation-deployment-city-of-everett
+    name: stockmarket-simulation-deployment-demo-bank
   path: container.yaml
