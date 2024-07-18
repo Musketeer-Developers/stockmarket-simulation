@@ -57,7 +57,7 @@ jobs:
     - name: Deploy feat/CI/CD branch to Amazon EKS
       if: steps.branch-name.outputs.current_branch == 'northwell-static'
       run: |
-        # kubectl delete configmap stockmarket-simulation-configmap-northwell-static --namespace ingress-nginx
+        kubectl delete configmap stockmarket-simulation-configmap-northwell-static --namespace ingress-nginx
         kubectl create configmap stockmarket-simulation-configmap-northwell-static --from-env-file=overlay/northwell-static/configmap/.env --namespace ingress-nginx
-        # kubectl delete deploy stockmarket-simulation-deployment-northwell-static --namespace ingress-nginx
+        kubectl delete deploy stockmarket-simulation-deployment-northwell-static --namespace ingress-nginx
         kustomize build overlay/northwell-static/ | kubectl apply -f -
