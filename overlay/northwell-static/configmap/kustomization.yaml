@@ -1,5 +1,5 @@
 namespace: ingress-nginx
 configMapGenerator:
-- name: stockmarket-simulation-configmap-brookline-bank
+- name: stockmarket-simulation-configmap-northwell-static
   envs:
   - .env

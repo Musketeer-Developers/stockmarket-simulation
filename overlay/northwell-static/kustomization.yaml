@@ -1,15 +1,15 @@
-nameSuffix: -brookline-bank
+nameSuffix: -northwell-static
 commonLabels:
-  app: stockmarket-simulation-brookline-bank
+  app: stockmarket-simulation-northwell-static
 metadata:
-  name: stockmarket-simulation-deployment-brookline-bank
+  name: stockmarket-simulation-deployment-northwell-static
   namespace: ingress-nginx
 bases:
 - ../../base
 namespace: ingress-nginx
 images:
 - name: 003718499156.dkr.ecr.us-east-1.amazonaws.com/stockmarket-simulation
-  newTag: brookline-bank
+  newTag: northwell-static
 patchesStrategicMerge:
 - stockmarket-simulation-deployment.yaml
 patches:
@@ -17,5 +17,5 @@ patches:
     group: apps
     version: v1
     kind: Deployment
-    name: stockmarket-simulation-deployment-brookline-bank
+    name: stockmarket-simulation-deployment-northwell-static
   path: container.yaml
