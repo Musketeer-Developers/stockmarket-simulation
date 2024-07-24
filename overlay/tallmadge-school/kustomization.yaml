@@ -1,15 +1,15 @@
-nameSuffix: -city-of-everett
+nameSuffix: -tallmadge-school
 commonLabels:
-  app: stockmarket-simulation-city-of-everett
+  app: stockmarket-simulation-tallmadge-school
 metadata:
-  name: stockmarket-simulation-deployment-city-of-everett
+  name: stockmarket-simulation-deployment-tallmadge-school
   namespace: ingress-nginx
 bases:
 - ../../base
 namespace: ingress-nginx
 images:
 - name: 003718499156.dkr.ecr.us-east-1.amazonaws.com/stockmarket-simulation
-  newTag: city-of-everett
+  newTag: tallmadge-school
 patchesStrategicMerge:
 - stockmarket-simulation-deployment.yaml
 patches:
@@ -17,5 +17,5 @@ patches:
     group: apps
     version: v1
     kind: Deployment
-    name: stockmarket-simulation-deployment-city-of-everett
+    name: stockmarket-simulation-deployment-tallmadge-school
   path: container.yaml
