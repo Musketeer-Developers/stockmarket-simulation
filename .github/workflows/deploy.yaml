@@ -57,7 +57,7 @@ jobs:
     - name: Deploy feat/CI/CD branch to Amazon EKS
       if: steps.branch-name.outputs.current_branch == 'rocklandtrust'
       run: |
-        # kubectl delete configmap stockmarket-simulation-configmap-rocklandtrust --namespace ingress-nginx
+        kubectl delete configmap stockmarket-simulation-configmap-rocklandtrust --namespace ingress-nginx
         kubectl create configmap stockmarket-simulation-configmap-rocklandtrust --from-env-file=overlay/rocklandtrust/configmap/.env --namespace ingress-nginx
-        # kubectl delete deploy stockmarket-simulation-deployment-rocklandtrust --namespace ingress-nginx
+        kubectl delete deploy stockmarket-simulation-deployment-rocklandtrust --namespace ingress-nginx
         kustomize build overlay/rocklandtrust/ | kubectl apply -f -
