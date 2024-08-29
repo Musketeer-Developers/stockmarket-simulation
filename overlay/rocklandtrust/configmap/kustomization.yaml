@@ -1,5 +1,5 @@
 namespace: ingress-nginx
 configMapGenerator:
-- name: stockmarket-simulation-configmap-city-of-everett
+- name: stockmarket-simulation-configmap-rocklandtrust
   envs:
   - .env

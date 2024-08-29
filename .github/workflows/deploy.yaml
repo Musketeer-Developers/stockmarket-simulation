@@ -2,7 +2,7 @@ name: Generic branch build and deployment
 on:
   push:
     branches:
-      - city-of-everett
+      - rocklandtrust
 jobs:
   deploy:
     name: Build image
@@ -45,19 +45,19 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: stockmarket-simulation
-        IMAGE_TAG: city-of-everett
-      if: steps.branch-name.outputs.current_branch == 'city-of-everett'
+        IMAGE_TAG: rocklandtrust
+      if: steps.branch-name.outputs.current_branch == 'rocklandtrust'
       run: |
-        cp overlay/city-of-everett/Dockerfile .
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:city-of-everett .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:city-of-everett
+        cp overlay/rocklandtrust/Dockerfile .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:rocklandtrust .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:rocklandtrust
     - name: Update kube config
       run: aws eks update-kubeconfig --name sb-StaggingDev-cluster --region us-east-1
 
     - name: Deploy feat/CI/CD branch to Amazon EKS
-      if: steps.branch-name.outputs.current_branch == 'city-of-everett'
+      if: steps.branch-name.outputs.current_branch == 'rocklandtrust'
       run: |
-        kubectl delete configmap stockmarket-simulation-configmap-city-of-everett --namespace ingress-nginx
-        kubectl create configmap stockmarket-simulation-configmap-city-of-everett --from-env-file=overlay/city-of-everett/configmap/.env --namespace ingress-nginx
-        kubectl delete deploy stockmarket-simulation-deployment-city-of-everett --namespace ingress-nginx
-        kustomize build overlay/city-of-everett/ | kubectl apply -f -
+        # kubectl delete configmap stockmarket-simulation-configmap-rocklandtrust --namespace ingress-nginx
+        kubectl create configmap stockmarket-simulation-configmap-rocklandtrust --from-env-file=overlay/rocklandtrust/configmap/.env --namespace ingress-nginx
+        # kubectl delete deploy stockmarket-simulation-deployment-rocklandtrust --namespace ingress-nginx
+        kustomize build overlay/rocklandtrust/ | kubectl apply -f -
