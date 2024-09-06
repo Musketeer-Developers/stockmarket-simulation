@@ -57,7 +57,7 @@ jobs:
     - name: Deploy feat/CI/CD branch to Amazon EKS
       if: steps.branch-name.outputs.current_branch == 'everett-high-school'
       run: |
-        # kubectl delete configmap stockmarket-simulation-configmap-everett-high-school --namespace ingress-nginx
+        kubectl delete configmap stockmarket-simulation-configmap-everett-high-school --namespace ingress-nginx
         kubectl create configmap stockmarket-simulation-configmap-everett-high-school --from-env-file=overlay/everett-high-school/configmap/.env --namespace ingress-nginx
-        # kubectl delete deploy stockmarket-simulation-deployment-everett-high-school --namespace ingress-nginx
+        kubectl delete deploy stockmarket-simulation-deployment-everett-high-school --namespace ingress-nginx
         kustomize build overlay/everett-high-school/ | kubectl apply -f -
