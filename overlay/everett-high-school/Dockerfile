@@ -19,7 +19,7 @@ FROM node:16-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-COPY overlay/city-of-everett/configmap/.env .
+COPY overlay/everett-high-school/configmap/.env .
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
@@ -40,7 +40,7 @@ ENV NODE_ENV production
 # ENV NEXT_TELEMETRY_DISABLED 1
 
 COPY --from=builder /app ./
-COPY --from=builder /app/overlay/city-of-everett/configmap/.env .
+COPY --from=builder /app/overlay/everett-high-school/configmap/.env .
 #COPY --from=builder /app/public ./public
 
 # Automatically leverage output traces to reduce image size

@@ -1,15 +1,15 @@
 - op: replace
   path: /spec/template/spec/containers/0/name
-  value: stockmarket-simulation-city-of-everett
+  value: stockmarket-simulation-everett-high-school
 - op: replace
   path: /spec/template/spec/containers/0/env/0/valueFrom/configMapKeyRef/name
-  value: stockmarket-simulation-configmap-city-of-everett
+  value: stockmarket-simulation-configmap-everett-high-school
 - op: replace
   path: /spec/template/spec/containers/0/env/1/valueFrom/configMapKeyRef/name
-  value: stockmarket-simulation-configmap-city-of-everett
+  value: stockmarket-simulation-configmap-everett-high-school
 - op: replace
   path: /spec/template/spec/containers/0/env/2/valueFrom/configMapKeyRef/name
-  value: stockmarket-simulation-configmap-city-of-everett
+  value: stockmarket-simulation-configmap-everett-high-school
 - op: replace
   path: /spec/template/spec/containers/0/env/3/valueFrom/configMapKeyRef/name
-  value: stockmarket-simulation-configmap-city-of-everett
+  value: stockmarket-simulation-configmap-everett-high-school
