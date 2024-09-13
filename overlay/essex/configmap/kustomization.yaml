@@ -1,5 +1,5 @@
 namespace: ingress-nginx
 configMapGenerator:
-- name: stockmarket-simulation-configmap-everett-high-school
+- name: stockmarket-simulation-configmap-essex
   envs:
   - .env

@@ -1,15 +1,15 @@
-nameSuffix: -everett-high-school
+nameSuffix: -essex
 commonLabels:
-  app: stockmarket-simulation-everett-high-school
+  app: stockmarket-simulation-essex
 metadata:
-  name: stockmarket-simulation-deployment-everett-high-school
+  name: stockmarket-simulation-deployment-essex
   namespace: ingress-nginx
 bases:
 - ../../base
 namespace: ingress-nginx
 images:
 - name: 003718499156.dkr.ecr.us-east-1.amazonaws.com/stockmarket-simulation
-  newTag: everett-high-school
+  newTag: essex
 patchesStrategicMerge:
 - stockmarket-simulation-deployment.yaml
 patches:
@@ -17,5 +17,5 @@ patches:
     group: apps
     version: v1
     kind: Deployment
-    name: stockmarket-simulation-deployment-everett-high-school
+    name: stockmarket-simulation-deployment-essex
   path: container.yaml

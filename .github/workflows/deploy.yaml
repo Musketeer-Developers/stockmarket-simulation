@@ -2,7 +2,7 @@ name: Generic branch build and deployment
 on:
   push:
     branches:
-      - everett-high-school
+      - essex
 jobs:
   deploy:
     name: Build image
@@ -45,19 +45,19 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: stockmarket-simulation
-        IMAGE_TAG: everett-high-school
-      if: steps.branch-name.outputs.current_branch == 'everett-high-school'
+        IMAGE_TAG: essex
+      if: steps.branch-name.outputs.current_branch == 'essex'
       run: |
-        cp overlay/everett-high-school/Dockerfile .
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:everett-high-school .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:everett-high-school
+        cp overlay/essex/Dockerfile .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:essex .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:essex
     - name: Update kube config
       run: aws eks update-kubeconfig --name sb-StaggingDev-cluster --region us-east-1
 
     - name: Deploy feat/CI/CD branch to Amazon EKS
-      if: steps.branch-name.outputs.current_branch == 'everett-high-school'
+      if: steps.branch-name.outputs.current_branch == 'essex'
       run: |
-        kubectl delete configmap stockmarket-simulation-configmap-everett-high-school --namespace ingress-nginx
-        kubectl create configmap stockmarket-simulation-configmap-everett-high-school --from-env-file=overlay/everett-high-school/configmap/.env --namespace ingress-nginx
-        kubectl delete deploy stockmarket-simulation-deployment-everett-high-school --namespace ingress-nginx
-        kustomize build overlay/everett-high-school/ | kubectl apply -f -
+        # kubectl delete configmap stockmarket-simulation-configmap-essex --namespace ingress-nginx
+        kubectl create configmap stockmarket-simulation-configmap-essex --from-env-file=overlay/essex/configmap/.env --namespace ingress-nginx
+        # kubectl delete deploy stockmarket-simulation-deployment-essex --namespace ingress-nginx
+        kustomize build overlay/essex/ | kubectl apply -f -
