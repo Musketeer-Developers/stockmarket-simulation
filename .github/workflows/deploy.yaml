@@ -57,7 +57,7 @@ jobs:
     - name: Deploy feat/CI/CD branch to Amazon EKS
       if: steps.branch-name.outputs.current_branch == 'essex'
       run: |
-        # kubectl delete configmap stockmarket-simulation-configmap-essex --namespace ingress-nginx
+        kubectl delete configmap stockmarket-simulation-configmap-essex --namespace ingress-nginx
         kubectl create configmap stockmarket-simulation-configmap-essex --from-env-file=overlay/essex/configmap/.env --namespace ingress-nginx
-        # kubectl delete deploy stockmarket-simulation-deployment-essex --namespace ingress-nginx
+        kubectl delete deploy stockmarket-simulation-deployment-essex --namespace ingress-nginx
         kustomize build overlay/essex/ | kubectl apply -f -
