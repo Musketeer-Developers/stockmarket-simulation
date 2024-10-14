@@ -1,15 +1,15 @@
-nameSuffix: -northwell-static
+nameSuffix: -bch
 commonLabels:
-  app: stockmarket-simulation-northwell-static
+  app: stockmarket-simulation-bch
 metadata:
-  name: stockmarket-simulation-deployment-northwell-static
+  name: stockmarket-simulation-deployment-bch
   namespace: ingress-nginx
 bases:
 - ../../base
 namespace: ingress-nginx
 images:
 - name: 003718499156.dkr.ecr.us-east-1.amazonaws.com/stockmarket-simulation
-  newTag: northwell-static
+  newTag: bch
 patchesStrategicMerge:
 - stockmarket-simulation-deployment.yaml
 patches:
@@ -17,5 +17,5 @@ patches:
     group: apps
     version: v1
     kind: Deployment
-    name: stockmarket-simulation-deployment-northwell-static
+    name: stockmarket-simulation-deployment-bch
   path: container.yaml
