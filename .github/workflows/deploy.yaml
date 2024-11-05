@@ -2,7 +2,7 @@ name: Generic branch build and deployment
 on:
   push:
     branches:
-      - brookline-bank
+      - master-static
 jobs:
   deploy:
     name: Build image
@@ -45,19 +45,19 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: stockmarket-simulation
-        IMAGE_TAG: brookline-bank
-      if: steps.branch-name.outputs.current_branch == 'brookline-bank'
+        IMAGE_TAG: master-static
+      if: steps.branch-name.outputs.current_branch == 'master-static'
       run: |
-        cp overlay/brookline-bank/Dockerfile .
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:brookline-bank .
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:brookline-bank
+        cp overlay/master-static/Dockerfile .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:master-static .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:master-static
     - name: Update kube config
       run: aws eks update-kubeconfig --name sb-StaggingDev-cluster --region us-east-1
 
     - name: Deploy feat/CI/CD branch to Amazon EKS
-      if: steps.branch-name.outputs.current_branch == 'brookline-bank'
+      if: steps.branch-name.outputs.current_branch == 'master-static'
       run: |
-        kubectl delete configmap stockmarket-simulation-configmap-brookline-bank --namespace ingress-nginx
-        kubectl create configmap stockmarket-simulation-configmap-brookline-bank --from-env-file=overlay/brookline-bank/configmap/.env --namespace ingress-nginx
-        kubectl delete deploy stockmarket-simulation-deployment-brookline-bank --namespace ingress-nginx
-        kustomize build overlay/brookline-bank/ | kubectl apply -f -
+        #kubectl delete configmap stockmarket-simulation-configmap-master-static --namespace ingress-nginx
+        kubectl create configmap stockmarket-simulation-configmap-master-static --from-env-file=overlay/master-static/configmap/.env --namespace ingress-nginx
+        #kubectl delete deploy stockmarket-simulation-deployment-master-static --namespace ingress-nginx
+        kustomize build overlay/master-static/ | kubectl apply -f -

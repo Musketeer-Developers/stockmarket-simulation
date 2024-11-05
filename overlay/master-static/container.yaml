@@ -1,15 +1,15 @@
 - op: replace
   path: /spec/template/spec/containers/0/name
-  value: stockmarket-simulation-brookline-bank
+  value: stockmarket-simulation-master-static
 - op: replace
   path: /spec/template/spec/containers/0/env/0/valueFrom/configMapKeyRef/name
-  value: stockmarket-simulation-configmap-brookline-bank
+  value: stockmarket-simulation-configmap-master-static
 - op: replace
   path: /spec/template/spec/containers/0/env/1/valueFrom/configMapKeyRef/name
-  value: stockmarket-simulation-configmap-brookline-bank
+  value: stockmarket-simulation-configmap-master-static
 - op: replace
   path: /spec/template/spec/containers/0/env/2/valueFrom/configMapKeyRef/name
-  value: stockmarket-simulation-configmap-brookline-bank
+  value: stockmarket-simulation-configmap-master-static
 - op: replace
   path: /spec/template/spec/containers/0/env/3/valueFrom/configMapKeyRef/name
-  value: stockmarket-simulation-configmap-brookline-bank
+  value: stockmarket-simulation-configmap-master-static
